@@ -32,7 +32,7 @@ def find_project():
 
 
 print("Set path for folder containign image to predict")
-IMAGES_FOLDER = os.path.dirname(os.path.realpath(__file__))
+# IMAGES_FOLDER = os.path.dirname(os.path.realpath(__file__))
 # print(str(IMAGES_FOLDER))
 # print(str(os.path.join(IMAGES_FOLDER, "TestImages", "testelephant2.jpg")))
 
@@ -42,7 +42,8 @@ project = find_project()
 
 print("Make prediction")
 try:
-    with open(os.path.join(IMAGES_FOLDER, "TestImages", "testgiraffe1.jpg"), mode="rb") as test_data:
+    with open("elephant.jpg") as test_data:
+    # with open(os.path.join(IMAGES_FOLDER, "TestImages", "testgiraffe1.jpg"), mode="rb") as test_data:
         results = predictor.predict_image(project.id, test_data.read())
 except Exception as e:
     print(str(e))
