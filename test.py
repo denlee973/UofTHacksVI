@@ -4,7 +4,7 @@ from azure.cognitiveservices.vision.customvision.training import CustomVisionTra
 from azure.cognitiveservices.vision.customvision.prediction import CustomVisionPredictionClient
 import os
 
-PROJECT_NAME = "aslReader"
+PROJECT_NAME = "asl"
 ENDPOINT = "https://southcentralus.api.cognitive.microsoft.com"
 trainingEndpoint = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.2/Training/"
 predictionEndpoint = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/"
@@ -24,18 +24,23 @@ def fetch_project():
     except Exception as e:
         print str(e)
 
+print("Set path for folder containign image to predict")
+IMAGES_FOLDER = os.path.dirname(os.path.realpath(__file__))
+
 # Get predictor and project objects
 print "Get predictor"
 predictor = CustomVisionPredictionClient(predictionKey, endpoint=ENDPOINT)
 project = fetch_project()
 
 print("Make prediction")
-try:
-    with open("one.jpg") as test_data:
-        results = predictor.predict_image(project.id, test_data.read())
-except Exception as e:
-    print(str(e))
-    input()
+# try:
+# with open("one.jpg") as test_data:
+with open(os.path.join(IMAGES_FOLDER, "test", "one.jpg"), mode="rb") as test_data:
+    results = predictor.predict_image(project.id, test_data.read())
+# except Exception as e:
+#     print(str(e))
+#     input()
+
 # Display the results
 for prediction in results.predictions:
     print(prediction.tag_name + ": {0:.2f}%".format(prediction.probability * 100))
