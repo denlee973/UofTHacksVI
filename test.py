@@ -33,13 +33,12 @@ predictor = CustomVisionPredictionClient(predictionKey, endpoint=ENDPOINT)
 project = fetch_project()
 
 print("Make prediction")
-# try:
-# with open("one.jpg") as test_data:
-with open(os.path.join(IMAGES_FOLDER, "test", "one.jpg"), mode="rb") as test_data:
-    results = predictor.predict_image(project.id, test_data.read())
-# except Exception as e:
-#     print(str(e))
-#     input()
+try:
+    with open(os.path.join(IMAGES_FOLDER, "test", "one.jpg"), mode="rb") as test_data:
+        results = predictor.predict_image(project.id, test_data.read())
+except Exception as e:
+    print(str(e))
+    input()
 
 # Display the results
 for prediction in results.predictions:
